@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import io
 import unittest
@@ -16,15 +16,13 @@ class YoutubeLyricsTestCase(unittest.TestCase):
 
     def test_bestresult(self):
         # given
-        with open('musixmatch_results.html', 'rb') as html_file:
+        with open('musixmatch_results_new.html', 'rb') as html_file:
             # then
             self.assertEqual(lyrics.bestresult(html_file), "https://www.musixmatch.com/lyrics/Metallica/Nothing-Else-Matters")
         # given
         html_file = io.BytesIO(b'invalid content')
         with self.assertRaises(ValueError):
             lyrics.bestresult(html_file)
-
-
 
     def test_getlyrics(self):
         # given

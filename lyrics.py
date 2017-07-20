@@ -5,13 +5,13 @@ Print lyrics of a song.
 Usage:
     lyrics.py <song_title>
 """
+import pdb
 import re
-import urllib.request
 import sys
+from urllib.parse import quote
+import urllib.request
 
 from lxml import html
-
-from urllib.parse import quote
 
 def makerequest(search):
     """
@@ -38,7 +38,7 @@ def bestresult(musixmatch_searchresult_page):
     pattern = re.compile(b'"track_share_url":"(\S+?)",')
     ret = pattern.findall(html)
     if ret:
-        return str(ret[0], 'utf-8')
+        return str(ret[0], 'unicode_escape')
     raise ValueError('No result found')
 
 def getlyrics(musixmatch_lyrics_page):
@@ -62,9 +62,11 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         try:
             search_uri = makerequest(sys.argv[1])
+            print(search_uri)
             search_req = urllib.request.Request(search_uri, headers={'User-Agent': 'Mozilla/5.0'})
             with urllib.request.urlopen(search_req) as search_page:
                 lyrics_uri = bestresult(search_page)
+                print(bytes(lyrics_uri, "utf-8").decode("unicode_escape"))
             lyrics_req = urllib.request.Request(lyrics_uri, headers={'User-Agent': 'Mozilla/5.0'})
             with urllib.request.urlopen(lyrics_req) as lyrics_page:
                 text = getlyrics(lyrics_page)
