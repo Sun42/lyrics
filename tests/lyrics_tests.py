@@ -16,7 +16,7 @@ class YoutubeLyricsTestCase(unittest.TestCase):
 
     def test_bestresult(self):
         # given
-        with open('musixmatch_results_new.html', 'rb') as html_file:
+        with open('./tests/musixmatch_results_new.html', 'rb') as html_file:
             # then
             self.assertEqual(lyrics.bestresult(html_file), "https://www.musixmatch.com/lyrics/Metallica/Nothing-Else-Matters")
         # given

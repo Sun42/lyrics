@@ -1,0 +1,3 @@
+#pip requirement file
+lyrics
+lxml>=3.0
