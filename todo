@@ -1,1 +1,1 @@
--fix tests called by makefile
+- cannot execute tests individually from the test directory (path, import pbm), maybe use context file??

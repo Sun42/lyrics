@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 
 import io
+import os
 import unittest
 
-import lyrics
+from lyrics import lyrics
+from lyrics import PROJECT_PATH
 
 class YoutubeLyricsTestCase(unittest.TestCase):
 
@@ -16,7 +18,9 @@ class YoutubeLyricsTestCase(unittest.TestCase):
 
     def test_bestresult(self):
         # given
-        with open('./tests/musixmatch_results_new.html', 'rb') as html_file:
+        html_filename = os.path.join(PROJECT_PATH, 'tests', 'musixmatch_results_new.html')
+        print('HTML_FILENAME {0}'.format(html_filename))
+        with open(html_filename, 'rb') as html_file:
             # then
             self.assertEqual(lyrics.bestresult(html_file), "https://www.musixmatch.com/lyrics/Metallica/Nothing-Else-Matters")
         # given
@@ -26,8 +30,11 @@ class YoutubeLyricsTestCase(unittest.TestCase):
 
     def test_getlyrics(self):
         # given
-        with open('nirvana-smells_like_teen_spirit_lyrics_musixmatch.html', 'r', encoding='utf-8') as html_file, \
-             open('nirvana-smells_like_teen_spirit.lyrics', 'r', encoding='utf-8') as lyrics_file:
+        
+        html_filename = os.path.join('./tests/', 'nirvana-smells_like_teen_spirit_lyrics_musixmatch.html')
+        lyrics_filename = os.path.join('./tests/', 'nirvana-smells_like_teen_spirit.lyrics')
+        with open(html_filename, 'r', encoding='utf-8') as html_file, \
+             open(lyrics_filename, 'r', encoding='utf-8') as lyrics_file:
             # then
             self.assertEqual(lyrics.getlyrics(html_file), lyrics_file.read())
 
